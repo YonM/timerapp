@@ -1,12 +1,12 @@
 <template>
 <div>
-  <h1>{{value}} </h1>
-  <button @click="value-=1">Start Timer! </button>
+  <h1>{{value}}</h1>
+  <button @click="countdown">Start Timer! </button>
 </div>
 </template>
 
 <script>
-var T= {
+export default {
   name: "Timer",
   props: {
     time: Number
@@ -17,16 +17,14 @@ var T= {
     }
   },
   methods: {
-    countdown: () => {
-      setInterval(function() {
+    countdown: function() {
+      const timer = setInterval(_ => {
         this.value = this.value - 1;
-        console.log("countdown initiated from: " + this.value + " " + this.time);
+        if (this.value === 0) clearInterval(timer);
       }, 1000);
     }
   }
 }  
-export default T;  
-  
 </script>
 
 <style></style>
