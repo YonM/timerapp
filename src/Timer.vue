@@ -1,6 +1,6 @@
 <template>
 <div>
-  <h1>{{value}}</h1>
+  <h1 :class="{ 'red-text': complete }">{{value}}</h1>
   <button @click="start">Start Timer!</button>
   <button @click="stop">Stop</button>
   <button @click="reset">Reset</button>
@@ -17,16 +17,22 @@ export default {
     return {
       value: this.time,
       timer: undefined,
+      complete: false,
     }
   },
   methods: {
     start: function() {
+      this.complete = false;
       this.timer = setInterval(_ => {
         this.value = this.value - 1;
-        if (this.value === 0) clearInterval(this.timer);
+        if (this.value === 0) {
+          clearInterval(this.timer);
+          this.complete = true;
+        }
       }, 1000);
     },
     stop: function() {
+      this.complete = false;
       clearInterval(this.timer);
     },
     reset: function() {
@@ -37,4 +43,8 @@ export default {
 }  
 </script>
 
-<style></style>
+<style>
+  .red-text {
+    color: red;
+  }
+</style>
